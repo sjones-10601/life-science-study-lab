@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Life Science Study Lab: Photosynthesis & Respiration</title>
+<style>
+:root{--green:#2e7d32;--leaf:#66bb6a;--blue:#1565c0;--gold:#f9a825;--ink:#263238;--paper:#f7faf7;--white:#fff;--red:#c62828}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink)}
+header{background:linear-gradient(135deg,#1b5e20,#43a047);color:white;padding:28px 18px;text-align:center}
+header h1{margin:0 0 8px;font-size:clamp(28px,5vw,46px)} header p{margin:0;font-size:18px}
+nav{position:sticky;top:0;z-index:5;background:#173d20;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;padding:8px}
+nav button{border:0;background:#2f6b39;color:#fff;padding:11px 14px;border-radius:999px;cursor:pointer;font-weight:700}
+nav button.active,nav button:hover{background:#fff;color:#1b5e20}
+main{max-width:1050px;margin:auto;padding:20px}
+.section{display:none}.section.active{display:block}
+.card{background:#fff;border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 4px 16px #00000012;border:1px solid #e3ebe3}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}
+@media(max-width:700px){.hero{grid-template-columns:1fr}}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:#e8f5e9;color:#1b5e20;font-weight:700}
+.equation{font-size:clamp(17px,3vw,25px);font-weight:800;text-align:center;padding:18px;border-radius:14px;background:#f1f8e9;margin:12px 0}
+.arrow{font-size:26px;color:#2e7d32}
+.term{font-size:30px}.mini{color:#607d8b}
+button.action{background:var(--blue);color:white;border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
+button.action:hover{filter:brightness(1.08)}
+.choice{display:block;width:100%;text-align:left;background:#f5f7f8;border:2px solid #dce3e6;border-radius:12px;padding:13px;margin:8px 0;cursor:pointer;font-size:16px}
+.choice:hover{border-color:#90caf9}.correct{background:#e8f5e9!important;border-color:#43a047!important}.wrong{background:#ffebee!important;border-color:#e53935!important}
+.feedback{min-height:26px;font-weight:700;margin-top:8px}
+.progress{height:12px;background:#e0e0e0;border-radius:20px;overflow:hidden}.bar{height:100%;background:#43a047;width:0%;transition:.3s}
+.flash{min-height:190px;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#e8f5e9,#e3f2fd);border-radius:18px;padding:25px;cursor:pointer}
+.flash strong{font-size:28px}.hidden{display:none}
+table{width:100%;border-collapse:collapse}th,td{padding:12px;border-bottom:1px solid #ddd;text-align:left;vertical-align:top}th{background:#e8f5e9}
+input[type=text]{padding:11px;border:2px solid #cfd8dc;border-radius:10px;width:min(100%,420px);font-size:16px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}.match button{text-align:center}
+.score{font-size:20px;font-weight:800;color:#1b5e20}
+footer{text-align:center;color:#607d8b;padding:25px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌱 Life Science Study Lab</h1>
+  <p>Photosynthesis & Cellular Respiration • 7th Grade Review</p>
+</header>
+<nav>
+ <button class="active" onclick="show('home',this)">🏠 Start</button>
+ <button onclick="show('learn',this)">📚 Learn</button>
+ <button onclick="show('compare',this)">⚖️ Compare</button>
+ <button onclick="show('flash',this)">🧠 Flashcards</button>
+ <button onclick="show('practice',this)">🎯 Practice</button>
+ <button onclick="show('quiz',this)">🏆 Quiz</button>
+</nav>
+<main>
+
+<section id="home" class="section active">
+ <div class="card hero">
+  <div>
+   <span class="badge">MISSION: Become a Brave Problem Solver!</span>
+   <h2>Can you explain how plants make food AND how cells get usable energy?</h2>
+   <p>Use the tabs to learn, practice vocabulary, compare the two processes, and take the final challenge.</p>
+   <button class="action" onclick="show('learn',document.querySelectorAll('nav button')[1])">Start Studying →</button>
+  </div>
+  <div class="card" style="margin:0;background:#f1f8e9">
+   <div class="term">☀️ + 🌿 + 💧 + CO₂</div>
+   <h3>Think like a scientist!</h3>
+   <p>Ask: <b>What goes in? What happens? What comes out? Where does it happen?</b></p>
+  </div>
+ </div>
+ <div class="grid">
+  <div class="card"><h3>🌞 Photosynthesis</h3><p>Plants use light energy to make glucose from carbon dioxide and water.</p></div>
+  <div class="card"><h3>⚡ Respiration</h3><p>Cells break down glucose to release usable energy (ATP).</p></div>
+  <div class="card"><h3>🔁 The Big Connection</h3><p>The products of one process are important reactants for the other.</p></div>
+ </div>
+ <div class="card">
+  <h3>Study Progress</h3><div class="progress"><div class="bar" id="homebar"></div></div>
+  <p id="progressText">Complete activities to build your study score!</p>
+ </div>
+</section>
+
+<section id="learn" class="section">
+ <h2>📚 Learn It</h2>
+ <div class="card">
+  <h3>🌱 Photosynthesis</h3>
+  <p><b>Purpose:</b> Capture light energy and store it in glucose (chemical energy).</p>
+  <div class="equation">6CO₂ + 6H₂O + ☀️ → C₆H₁₂O₆ + 6O₂</div>
+  <div class="grid">
+   <div><b>Inputs:</b><br>☀️ Light energy<br>💨 Carbon dioxide<br>💧 Water</div>
+   <div><b>Outputs:</b><br>🍬 Glucose<br>💨 Oxygen</div>
+   <div><b>Where?</b><br>Chloroplasts in plant cells</div>
+  </div>
+ </div>
+ <div class="card">
+  <h3>⚡ Cellular Respiration</h3>
+  <p><b>Purpose:</b> Break down glucose and transfer its stored energy into ATP that cells can use.</p>
+  <div class="equation">C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP ⚡</div>
+  <div class="grid">
+   <div><b>Inputs:</b><br>🍬 Glucose<br>💨 Oxygen</div>
+   <div><b>Outputs:</b><br>💨 Carbon dioxide<br>💧 Water<br>⚡ ATP</div>
+   <div><b>Where?</b><br>Mostly in mitochondria</div>
+  </div>
+ </div>
+ <div class="card">
+  <h3>🔑 Vocabulary</h3>
+  <div class="grid">
+   <div><b>Chloroplast</b><br>Organelle where photosynthesis occurs.</div>
+   <div><b>Mitochondrion</b><br>Organelle where most cellular respiration occurs.</div>
+   <div><b>Glucose</b><br>A sugar that stores chemical energy.</div>
+   <div><b>ATP</b><br>A molecule cells use as a readily available energy source.</div>
+   <div><b>Reactant</b><br>A substance that goes into a chemical reaction.</div>
+   <div><b>Product</b><br>A substance made by a chemical reaction.</div>
+  </div>
+ </div>
+</section>
+
+<section id="compare" class="section">
+ <h2>⚖️ Compare the Processes</h2>
+ <div class="card">
+ <table><tr><th></th><th>Photosynthesis 🌱</th><th>Cellular Respiration ⚡</th></tr>
+ <tr><th>Main job</th><td>Stores energy in glucose</td><td>Releases usable energy as ATP</td></tr>
+ <tr><th>Reactants</th><td>CO₂ + H₂O + light</td><td>Glucose + O₂</td></tr>
+ <tr><th>Products</th><td>Glucose + O₂</td><td>CO₂ + H₂O + ATP</td></tr>
+ <tr><th>Key organelle</th><td>Chloroplast</td><td>Mitochondrion</td></tr>
+ <tr><th>Who?</th><td>Plants, algae, and some microorganisms</td><td>Cells of plants, animals, fungi, and many microorganisms</td></tr>
+ </table>
+ </div>
+ <div class="card">
+  <h3>🔄 See the connection</h3>
+  <p>Photosynthesis makes <b>glucose and oxygen</b>. Cellular respiration uses glucose and oxygen. Respiration makes <b>carbon dioxide and water</b>, which photosynthesis can use.</p>
+  <div class="equation">Photosynthesis → 🍬 glucose + O₂ → Respiration → CO₂ + H₂O → Photosynthesis</div>
+ </div>
+</section>
+
+<section id="flash" class="section">
+ <h2>🧠 Flashcards</h2>
+ <p>Click a card to reveal the answer. Use the buttons to move through the deck.</p>
+ <div class="flash card" id="flashcard" onclick="flipCard()"><div><strong id="flashText">What is the main purpose of photosynthesis?</strong><p class="mini">Click to flip</p></div></div>
+ <div style="display:flex;gap:10px;justify-content:center">
+  <button class="action" onclick="prevCard()">← Previous</button>
+  <button class="action" onclick="nextCard()">Next →</button>
+ </div>
+ <p style="text-align:center" id="flashCount"></p>
+</section>
+
+<section id="practice" class="section">
+ <h2>🎯 Practice</h2>
+ <div class="card">
+  <h3>Input or Output?</h3>
+  <p id="sortPrompt"></p>
+  <button class="choice" onclick="sortAnswer('input')">INPUT</button>
+  <button class="choice" onclick="sortAnswer('output')">OUTPUT</button>
+  <div class="feedback" id="sortFeedback"></div>
+  <p class="score">Practice score: <span id="sortScore">0</span></p>
+ </div>
+ <div class="card">
+  <h3>🧩 Complete the thought</h3>
+  <p>Plants use carbon dioxide, water, and light energy to make __________ and oxygen.</p>
+  <input id="fill" type="text" placeholder="Type your answer">
+  <button class="action" onclick="checkFill()">Check</button>
+  <div class="feedback" id="fillFeedback"></div>
+ </div>
+</section>
+
+<section id="quiz" class="section">
+ <h2>🏆 Final Challenge</h2>
+ <div class="card">
+  <div class="progress"><div class="bar" id="quizbar"></div></div>
+  <p id="qNum"></p>
+  <h3 id="question"></h3>
+  <div id="answers"></div>
+  <div class="feedback" id="qFeedback"></div>
+  <button class="action hidden" id="nextQ" onclick="nextQuestion()">Next Question →</button>
+  <div class="score" id="finalScore"></div>
+ </div>
+</section>
+
+</main>
+<footer>🌿 Keep asking questions. Keep solving problems. Keep growing. 🌿</footer>
+
+<script>
+const state={points:0,answered:0};
+function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function updateProgress(){let p=Math.min(100,state.points*5);document.getElementById('homebar').style.width=p+'%';document.getElementById('progressText').textContent=state.points+' study points earned — keep going!'}
+const cards=[
+['What is the main purpose of photosynthesis?','To use light energy to make glucose, storing energy in chemical form.'],
+['Where does photosynthesis occur?','In chloroplasts.'],
+['What gas do plants take in for photosynthesis?','Carbon dioxide (CO₂).'],
+['What gas is released during photosynthesis?','Oxygen (O₂).'],
+['What is the main purpose of cellular respiration?','To transfer energy from glucose into ATP that cells can use.'],
+['Where does most cellular respiration occur?','In mitochondria.'],
+['What molecule is the cell’s readily usable energy source?','ATP.'],
+['What connects the two processes?','Photosynthesis makes glucose and oxygen that respiration uses; respiration makes carbon dioxide and water that photosynthesis can use.']
+];
+let fi=0,front=true;
+function renderFlash(){document.getElementById('flashText').textContent=front?cards[fi][0]:cards[fi][1];document.getElementById('flashCount').textContent=`Card ${fi+1} of ${cards.length}`}
+function flipCard(){front=!front;renderFlash()} function nextCard(){fi=(fi+1)%cards.length;front=true;renderFlash()} function prevCard(){fi=(fi-1+cards.length)%cards.length;front=true;renderFlash()} renderFlash();
+
+const sortItems=[
+['carbon dioxide','input'],['glucose','output'],['water','input'],['oxygen','output'],['light energy','input'],
+['ATP','output'],['glucose','input'],['carbon dioxide','output'],['oxygen','input'],['water','output']
+];
+let si=0,ss=0;
+function renderSort(){document.getElementById('sortPrompt').innerHTML=`For <b>${si%2===0?'photosynthesis':'cellular respiration'}</b>, is <b>${sortItems[si][0]}</b> an input or an output?`}
+function sortAnswer(a){let item=sortItems[si],correct=item[1];if((si%2===0&&a===correct)||(si%2===1&&((item[0]==='glucose'&&a==='input')||(item[0]==='oxygen'&&a==='input')||(item[0]==='carbon dioxide'&&a==='output')||(item[0]==='water'&&a==='output')||(item[0]==='ATP'&&a==='output')))){ss++;state.points++;document.getElementById('sortFeedback').textContent='✅ Correct!';}else{document.getElementById('sortFeedback').textContent='❌ Not quite — think about what goes INTO or comes OUT of the process.'}document.getElementById('sortScore').textContent=ss;si=(si+1)%sortItems.length;renderSort();updateProgress()}
+renderSort();
+function checkFill(){let v=document.getElementById('fill').value.trim().toLowerCase();let f=document.getElementById('fillFeedback');if(v==='glucose'||v.includes('sugar')){f.textContent='✅ Correct! Glucose stores chemical energy.';state.points++;updateProgress()}else f.textContent='❌ Try again. Think of the sugar made by photosynthesis.'}
+
+const qs=[
+['Which is an INPUT of photosynthesis?',['Oxygen','Carbon dioxide','Glucose','ATP'],1],
+['Which organelle is most directly associated with photosynthesis?',['Nucleus','Mitochondrion','Chloroplast','Ribosome'],2],
+['Which is an OUTPUT of cellular respiration?',['Glucose','Oxygen','Carbon dioxide','Light energy'],2],
+['What is the main usable energy molecule produced through cellular respiration?',['DNA','ATP','CO₂','Water'],1],
+['Which statement best describes the relationship between the two processes?',['They are completely unrelated.','Each process can provide materials used by the other.','Only animals perform both.','Both happen only in chloroplasts.'],1],
+['A plant is kept in darkness. Which process can still occur in its cells?',['Cellular respiration','Photosynthesis only','Neither process','Only DNA replication'],0],
+['Which equation represents photosynthesis?',['Glucose + oxygen → CO₂ + water + ATP','CO₂ + water + light → glucose + oxygen','ATP + oxygen → glucose','Water + oxygen → glucose'],1],
+['Why do cells need cellular respiration?',['To make sunlight','To make DNA','To transfer energy from food into a usable form','To create chloroplasts'],2]
+];
+let qi=0,qsScore=0,locked=false;
+function renderQ(){locked=false;document.getElementById('qNum').textContent=`Question ${qi+1} of ${qs.length}`;document.getElementById('question').textContent=qs[qi][0];document.getElementById('qFeedback').textContent='';document.getElementById('nextQ').classList.add('hidden');document.getElementById('quizbar').style.width=(qi/qs.length*100)+'%';let box=document.getElementById('answers');box.innerHTML='';qs[qi][1].forEach((a,i)=>{let b=document.createElement('button');b.className='choice';b.textContent=a;b.onclick=()=>answerQ(i,b);box.appendChild(b)});document.getElementById('finalScore').textContent=''}
+function answerQ(i,b){if(locked)return;locked=true;let ok=i===qs[qi][2];b.classList.add(ok?'correct':'wrong');if(ok){qsScore++;state.points++;document.getElementById('qFeedback').textContent='✅ Correct!'}else{document.getElementById('qFeedback').textContent='❌ Review the explanation in the Learn tab.'}document.querySelectorAll('#answers .choice').forEach((x,j)=>{if(j===qs[qi][2])x.classList.add('correct')});document.getElementById('nextQ').classList.remove('hidden');updateProgress()}
+function nextQuestion(){if(qi<qs.length-1){qi++;renderQ()}else{document.getElementById('quizbar').style.width='100%';document.getElementById('question').textContent='🎉 Challenge complete!';document.getElementById('answers').innerHTML='';document.getElementById('qFeedback').textContent=`You scored ${qsScore} out of ${qs.length}.`;document.getElementById('nextQ').classList.add('hidden');document.getElementById('finalScore').textContent=qsScore===qs.length?'🌟 Perfect score!':'Great work — now review the questions you missed and try again!';}}
+renderQ();
+</script>
+</body>
+</html>
